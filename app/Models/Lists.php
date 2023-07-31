@@ -33,4 +33,14 @@ class Lists extends Model
     protected $casts = [
         'title' => 'string'
     ];
+
+    /**
+     * Get tasks in the list.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany('App\Models\Tasks');
+    }
 }

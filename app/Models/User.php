@@ -42,4 +42,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get user lists.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function lists()
+    {
+        return $this->hasMany('App\Models\Lists');
+    }
 }
