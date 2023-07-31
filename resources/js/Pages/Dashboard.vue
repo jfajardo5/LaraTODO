@@ -17,7 +17,7 @@ import { Head } from '@inertiajs/vue3';
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <h1 class="text-2xl">Your lists</h1>
                         <!-- TODO Create a component to display lists -->
-                        <!-- TODO Create functionaly to create a new list -->
+                        <!-- TODO Create functionality to create a new list -->
                         <!-- TODO Create functionality to add tasks to a list -->
                     </div>
                 </div>
