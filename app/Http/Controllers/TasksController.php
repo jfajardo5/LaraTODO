@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Tasks;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TasksController extends Controller
 {
     // TODO Build view()
     // TODO Build delete()
+
     public function create(Request $request, String $list_id): RedirectResponse
     {
         $request->validate([
@@ -20,7 +22,7 @@ class TasksController extends Controller
         $list = $request->user()->lists()->findOrFail($list_id);
 
         $task = new Tasks;
-        $task->todo = $request->task;
+        $task->todo = Str::limit($request->task, 255);
         $task->user_id = $request->user()->id;
         $task->lists_id = $list->id;
         $task->save();
@@ -42,8 +44,20 @@ class TasksController extends Controller
             ->findOrFail($list_id)
             ->tasks()->findOrFail($task_id);
 
-        $task->todo = $request->todo;
+        $task->todo = Str::limit($request->todo, 255);
         $task->completed = $request->completed;
         $task->save();
+    }
+
+    public function delete(Request $request, String $list_id, String $task_id): RedirectResponse
+    {
+        $request->validate([
+            $list_id => 'numeric|exists:lists,id',
+            $task_id => 'numeric|exists:tasks,id'
+        ]);
+
+        $request->user()->lists()->findOrFail($list_id)->tasks()->findOrFail($task_id)->delete();
+
+        return to_route('lists.view', ['id' => $list_id]);
     }
 }

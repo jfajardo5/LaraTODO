@@ -55,15 +55,15 @@ function updateTask(task: ListTask) {
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="inline-flex items-center">
-                <form @submit.prevent="updateList">
+            <form @submit.prevent="updateList">
+                <div class="inline-flex items-center">
                     <div class="inline-flex items-center">
                         <input type="text" v-model="listForm.title"
                             class="dark:bg-gray-700 border-gray-900 rounded-l-lg font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                         <button class="px-4 py-2 bg-purple-800 rounded-r-lg" type="submit">Update Name</button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </template>
 
         <div class="py-3">

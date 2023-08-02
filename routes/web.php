@@ -18,6 +18,7 @@ use Inertia\Inertia;
 |
 */
 
+/** Index **/
 Route::get('/', function () {
     return Inertia::render('Index', [
         'canLogin' => Route::has('login'),
@@ -28,16 +29,20 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth', 'verified')->group(function () {
+    /** Dashboard **/
     Route::get('/dashboard', [ListsController::class, 'all'])->name('dashboard');
 
+    /** Lists Routes **/
+    Route::post('/lists', [ListsController::class, 'create'])->name('lists.create');
     Route::get('/lists/{id}', [ListsController::class, 'view'])->name('lists.view');
     Route::patch('/lists/{id}', [ListsController::class, 'update'])->name('lists.update');
-    Route::post('/lists', [ListsController::class, 'create'])->name('lists.create');
 
+    /** Tasks Routes **/
     Route::post('/lists/{list_id}/tasks', [TasksController::class, 'create'])->name('tasks.create');
     Route::patch('/lists/{list_id}/tasks/{task_id}', [TasksController::class, 'update'])->name('tasks.update');
+    Route::delete('/lists/{list_id}/tasks/{task_id}', [TasksController::class, 'delete'])->name('tasks.delete');
 
-
+    /** User Routes **/
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

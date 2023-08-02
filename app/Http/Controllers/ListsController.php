@@ -7,11 +7,10 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 
 class ListsController extends Controller
 {
-    // TODO allow for create() to include a name for the list, and fix it to route to the right template
-    // TODO Build update()
     // TODO Build delete()
     public function all(Request $request): Response
     {
@@ -45,7 +44,7 @@ class ListsController extends Controller
 
         $list = new Lists();
         $list->user_id = $request->user()->id;
-        $list->title = $request->title;
+        $list->title = Str::limit($request->title, 255);
         $list->save();
 
         return to_route('lists.view', ['id' => $list->id]);
@@ -58,7 +57,7 @@ class ListsController extends Controller
             'title' => 'string'
         ]);
         $list = $request->user()->lists()->findOrFail($list_id);
-        $list->title = $request->title;
+        $list->title = Str::limit($request->title, 255);
         $list->save();
         return to_route('lists.view', ['id' => $list_id]);
     }

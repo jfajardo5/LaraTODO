@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('todo', 255);
+            $table->text('todo');
             $table->boolean('completed')->default(false);
 
             /*Foreign Keys*/
