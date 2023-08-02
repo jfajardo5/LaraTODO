@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, router } from '@inertiajs/vue3';
 import Task from '@/Components/TODO/Task.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { ListTask } from '@/types/todo';
@@ -23,19 +23,18 @@ const form = useForm({
     'task': ''
 });
 
-function updateTask(updated: ListTask) {
-    console.log(updated);
-    const index = props.tasks.findIndex((t: ListTask) => t.id === updated.id);
-    console.log(index);
-    props.tasks[index] = updated;
-}
-
 function submit() {
     form.post(route('tasks.create', { 'list_id': props.list.id }), {
         onFinish: () => {
-            form.reset('task');
+            form.task = '';
         },
     });
+}
+
+function updateTask(task: ListTask) {
+    router.patch(route('tasks.update', { list_id: props.list.id, task_id: task.id }), task);
+    const index = props.tasks.findIndex((t: ListTask) => t.id === task.id);
+    props.tasks[index] = task;
 }
 </script>
 
@@ -74,7 +73,7 @@ function submit() {
                             </section>
                         </div>
                         <form @submit.prevent="submit">
-                            <input v-model="form.task" class="rounded-lg" type="text" name="task">
+                            <input v-model="form.task" class="rounded-lg text-gray-800" type="text" name="task">
                             <SecondaryButton type="submit">Add Task</SecondaryButton>
                         </form>
                     </div>

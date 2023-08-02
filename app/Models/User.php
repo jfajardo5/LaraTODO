@@ -44,12 +44,22 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get user lists.
+     * Get user lisListsts.
      *
      * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function lists()
     {
         return $this->hasMany('App\Models\Lists');
+    }
+
+    /**
+     * Get user tasks.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany('App\Models\Tasks');
     }
 }

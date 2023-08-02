@@ -45,4 +45,14 @@ class Tasks extends Model
     {
         return $this->belongsTo('App\Models\Lists');
     }
+
+    /**
+     * Get the parent user.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }
