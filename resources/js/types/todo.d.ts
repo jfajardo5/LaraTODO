@@ -3,3 +3,8 @@ export type ListTask = T & {
     text: string,
     completed: boolean
 }
+
+export type ListModel = T & {
+    id: number,
+    title: string,
+}

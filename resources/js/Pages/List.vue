@@ -2,7 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, router } from '@inertiajs/vue3';
 import Task from '@/Components/TODO/Task.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { ListTask } from '@/types/todo';
 import { computed } from 'vue';
 
@@ -43,7 +42,12 @@ function updateTask(task: ListTask) {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{{ list.title }}</h2>
+            <div class="inline-flex items-center">
+                <input type="text"
+                    class="dark:bg-gray-700 border-gray-900 rounded-l-lg font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
+                    :value="list.title">
+                <button class="px-4 py-2 bg-purple-800 rounded-r-lg">Update Name</button>
+            </div>
         </template>
 
         <div class="py-3">
@@ -52,8 +56,11 @@ function updateTask(task: ListTask) {
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <div class="w-full inline-flex justify-center items-center p-6">
                             <form @submit.prevent="submit">
-                                <input v-model="form.task" class="rounded-lg text-gray-800" type="text" name="task">
-                                <SecondaryButton type="submit">Add Task</SecondaryButton>
+                                <div class="inline-flex items-center">
+                                    <input v-model="form.task" class="border-gray-900 rounded-l-lg text-gray-800"
+                                        type="text" name="task">
+                                    <button class="px-4 py-2 bg-green-600 rounded-r-lg" type="submit">Add Task</button>
+                                </div>
                             </form>
                         </div>
                         <div class="flex flex-row justify-evenly">
