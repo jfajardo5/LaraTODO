@@ -37,10 +37,10 @@ class TasksController extends Controller
             'completed' => 'boolean|required'
         ]);
 
-        $task = Tasks::where([
-            'user_id' => $request->user()->id,
-            'lists_id' => $list_id
-        ])->findOrFail($task_id);
+        $task = $request->user()
+            ->lists()
+            ->findOrFail($list_id)
+            ->tasks()->findOrFail($task_id);
 
         $task->todo = $request->todo;
         $task->completed = $request->completed;

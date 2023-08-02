@@ -43,6 +43,7 @@ function submitTask() {
 }
 
 function updateTask(task: ListTask) {
+    console.log(task);
     router.patch(route('tasks.update', { list_id: props.list.id, task_id: task.id }), task);
     const index = props.tasks.findIndex((t: ListTask) => t.id === task.id);
     props.tasks[index] = task;
