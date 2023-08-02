@@ -28,7 +28,8 @@ Route::get('/', function () {
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('/dashboard', [ListsController::class, 'all'])->name('dashboard');
-    Route::get('/lists', [ListsController::class, 'view'])->name('lists.view');
+    Route::get('/lists/{id}', [ListsController::class, 'view'])->name('lists.view');
+    Route::post('/lists', [ListsController::class, 'create'])->name('lists.create');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

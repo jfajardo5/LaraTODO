@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
+
+const form = useForm({
+    'new_list': ''
+});
+
+function submit() {
+    form.post(route('lists.create'), {
+    });
+}
 </script>
 
 <template>
@@ -16,7 +25,10 @@ import { Head } from '@inertiajs/vue3';
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <h1 class="text-2xl">Your lists</h1>
-                        <button>Add List</button>
+                        <form @submit.prevent="submit">
+                            <input v-model="form.new_list" type="text" name="new_list">
+                            <button type="submit">Add List</button>
+                        </form>
                         <!-- TODO Create a component to display lists -->
                         <!-- TODO Create functionality to create a new list -->
                         <!-- TODO Create functionality to add tasks to a list -->
