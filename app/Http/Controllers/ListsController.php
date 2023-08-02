@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lists;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class ListsController extends Controller
 {
@@ -26,12 +28,18 @@ class ListsController extends Controller
         ]);
     }
 
-    public function create(Request $request): Response
+    public function create(Request $request): RedirectResponse
     {
-        $request->user()->lists()->create();
-        return Inertia::render('List', [
-            'lists' => $request->user()->lists()
+        $request->validate([
+            'title' => 'string'
         ]);
+
+        $list = new Lists();
+        $list->user_id = $request->user()->id;
+        $list->title = $request->title;
+        $list->save();
+
+        return to_route('lists.view', ['id' => $list->id]);
     }
 
     public function view(Request $request, String $id): Response

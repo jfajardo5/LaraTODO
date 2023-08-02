@@ -10,7 +10,7 @@ const props = defineProps({
 })
 
 const form = useForm({
-    'new_list': ''
+    'title': ''
 });
 
 function submit() {
@@ -30,14 +30,14 @@ function submit() {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <h1 class="text-2xl">Your lists</h1>
                         <form @submit.prevent="submit">
                             <div class="inline-flex items-center mt-2 mb-2">
-                                <input class="border-gray-900 rounded-l-lg" v-model="form.new_list" type="text"
-                                    name="new_list">
-                                <button class="rounded-r-lg px-4 py-2 bg-purple-800" type="submit">Add List</button>
+                                <input class="border-gray-900 rounded-l-lg text-gray-800" v-model="form.title" type="text"
+                                    name="title" placeholder="Enter your list name">
+                                <button class="rounded-r-lg px-4 py-2 bg-purple-800" type="submit">Create List</button>
                             </div>
                         </form>
+                        <h1 class="text-2xl mt-4 mb-2">Your lists</h1>
                         <div class="flex flex-row mt-5">
                             <div v-for="list in  lists">
                                 <div class="flex flex-col bg-gray-700 p-4 m-2 rounded-lg">
