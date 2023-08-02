@@ -43,15 +43,21 @@ function updateTask(task: ListTask) {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Dashboard</h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{{ list.title }}</h2>
         </template>
 
         <div class="py-3">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <div class="w-full inline-flex justify-center items-center p-6">
+                            <form @submit.prevent="submit">
+                                <input v-model="form.task" class="rounded-lg text-gray-800" type="text" name="task">
+                                <SecondaryButton type="submit">Add Task</SecondaryButton>
+                            </form>
+                        </div>
                         <div class="flex flex-row justify-evenly">
-                            <section class="justify-self-start">
+                            <div>
                                 <h2>
                                     <h2 class="text-xl font-bold">Ongoing</h2>
                                 </h2>
@@ -60,8 +66,8 @@ function updateTask(task: ListTask) {
                                         <Task v-if="!task.completed" :task="task" @update:task="updateTask" />
                                     </li>
                                 </ul>
-                            </section>
-                            <section class="justify-self-end">
+                            </div>
+                            <div>
                                 <h2>
                                     <h2 class="text-xl font-bold">Completed</h2>
                                 </h2>
@@ -70,12 +76,8 @@ function updateTask(task: ListTask) {
                                         <Task v-if="task.completed" :task="task" @update:task="updateTask" />
                                     </li>
                                 </ul>
-                            </section>
+                            </div>
                         </div>
-                        <form @submit.prevent="submit">
-                            <input v-model="form.task" class="rounded-lg text-gray-800" type="text" name="task">
-                            <SecondaryButton type="submit">Add Task</SecondaryButton>
-                        </form>
                     </div>
                 </div>
             </div>
