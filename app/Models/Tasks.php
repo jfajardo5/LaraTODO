@@ -15,7 +15,7 @@ class Tasks extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'text',
+        'todo',
         'completed'
     ];
 
@@ -32,7 +32,17 @@ class Tasks extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'task' => 'string',
+        'todo' => 'string',
         'completed' => 'boolean'
     ];
+
+    /**
+     * Get the parent list.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function list()
+    {
+        return $this->belongsTo('App\Models\Lists');
+    }
 }

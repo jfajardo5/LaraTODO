@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Faker\Core\Number;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
@@ -30,8 +29,10 @@ class ListsController extends Controller
 
     public function view(Request $request, String $id): Response
     {
+        $list = $request->user()->lists()->findOrFail($id);
         return Inertia::render('List', [
-            'list' => $request->user()->lists()->findOrFail($id)
+            'list' => $list,
+            'tasks' => $list->tasks()->get()
         ]);
     }
 }

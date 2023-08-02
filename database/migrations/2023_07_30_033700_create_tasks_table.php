@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('list_id');
-            $table->foreign('list_id')->references('id')->on('lists')->onDelete('cascade');
-            $table->string('text');
+            $table->unsignedBigInteger('lists_id');
+            $table->foreign('lists_id')->references('id')->on('lists')->onDelete('cascade');
+            $table->string('todo');
             $table->boolean('completed')->default(false);
         });
     }

@@ -4,37 +4,20 @@ import { Head, useForm } from '@inertiajs/vue3';
 import Task from '@/Components/TODO/Task.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { ListTask } from '@/types/todo';
-import { reactive } from 'vue';
+import { computed } from 'vue';
 
-const props = defineProps
+const props = defineProps({
+    'list': {
+        type: Object,
+        required: true
+    },
+    'tasks': {
+        type: Array as () => ListTask,
+        reactive: true
+    }
+});
 
-const tasks = reactive([
-    {
-        'id': 1,
-        'text': "Task 1",
-        'completed': true,
-    },
-    {
-        'id': 2,
-        'text': "Task 2",
-        'completed': false,
-    },
-    {
-        'id': 3,
-        'text': "Task 3",
-        'completed': false,
-    },
-    {
-        'id': 4,
-        'text': "Task 4",
-        'completed': false,
-    },
-    {
-        'id': 5,
-        'text': "Task 5",
-        'completed': false,
-    },
-]);
+const tasks = computed(() => props.tasks);
 
 const form = useForm({
     'task': ''
@@ -42,27 +25,22 @@ const form = useForm({
 
 function updateTask(updated: ListTask) {
     console.log(updated);
-    const index = tasks.findIndex((t) => t.id === updated.id);
+    const index = props.tasks.findIndex((t: ListTask) => t.id === updated.id);
     console.log(index);
-    tasks[index] = updated;
+    props.tasks[index] = updated;
 }
 
 function submit() {
-    tasks.push({
-        id: 11,
-        text: form.task,
-        completed: false
-    })
-    // form.post(route('login'), {
-    //     onFinish: () => {
-    //         form.reset('task');
-    //     },
-    // });
+    form.post(route('tasks.create', { 'list_id': props.list.id }), {
+        onFinish: () => {
+            form.reset('task');
+        },
+    });
 }
 </script>
 
 <template>
-    <Head title="List X" />
+    <Head :title="list.title" />
 
     <AuthenticatedLayout>
         <template #header>
