@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('list_id');
             $table->foreign('list_id')->references('id')->on('lists')->onDelete('cascade');
-            $table->string('task');
+            $table->string('text');
             $table->boolean('completed')->default(false);
         });
     }
