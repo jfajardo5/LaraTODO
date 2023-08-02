@@ -57,26 +57,26 @@ function updateTask(task: ListTask) {
                             </form>
                         </div>
                         <div class="flex flex-row justify-evenly">
-                            <div>
+                            <section class="w-1/2 border border-black rounded-lg p-4 m-4">
                                 <h2>
-                                    <h2 class="text-xl font-bold">Ongoing</h2>
+                                    <h2 class="text-2xl font-bold underline">Ongoing</h2>
                                 </h2>
-                                <ul class="p-2">
+                                <ul class="p-4">
                                     <li v-for="task in tasks">
                                         <Task v-if="!task.completed" :task="task" @update:task="updateTask" />
                                     </li>
                                 </ul>
-                            </div>
-                            <div>
+                            </section>
+                            <section class="w-1/2 border border-black rounded-lg p-4 m-4">
                                 <h2>
-                                    <h2 class="text-xl font-bold">Completed</h2>
+                                    <h2 class="text-2xl font-bold underline">Completed</h2>
                                 </h2>
-                                <ul class="p-2">
+                                <ul class="p-4">
                                     <li v-for="task in tasks">
                                         <Task v-if="task.completed" :task="task" @update:task="updateTask" />
                                     </li>
                                 </ul>
-                            </div>
+                            </section>
                         </div>
                     </div>
                 </div>
