@@ -31,6 +31,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/dashboard', [ListsController::class, 'all'])->name('dashboard');
 
     Route::get('/lists/{id}', [ListsController::class, 'view'])->name('lists.view');
+    Route::patch('/lists/{id}', [ListsController::class, 'update'])->name('lists.update');
     Route::post('/lists', [ListsController::class, 'create'])->name('lists.create');
 
     Route::post('/lists/{list_id}/tasks', [TasksController::class, 'create'])->name('tasks.create');

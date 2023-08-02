@@ -28,6 +28,15 @@ class ListsController extends Controller
         ]);
     }
 
+    public function view(Request $request, String $id): Response
+    {
+        $list = $request->user()->lists()->findOrFail($id);
+        return Inertia::render('List', [
+            'list' => $list,
+            'tasks' => $list->tasks()->get()
+        ]);
+    }
+
     public function create(Request $request): RedirectResponse
     {
         $request->validate([
@@ -42,12 +51,15 @@ class ListsController extends Controller
         return to_route('lists.view', ['id' => $list->id]);
     }
 
-    public function view(Request $request, String $id): Response
+    public function update(Request $request, String $list_id): RedirectResponse
     {
-        $list = $request->user()->lists()->findOrFail($id);
-        return Inertia::render('List', [
-            'list' => $list,
-            'tasks' => $list->tasks()->get()
+        $request->validate([
+            $list_id => 'numeric|exists:lists,id',
+            'title' => 'string'
         ]);
+        $list = $request->user()->lists()->findOrFail($list_id);
+        $list->title = $request->title;
+        $list->save();
+        return to_route('lists.view', ['id' => $list_id]);
     }
 }

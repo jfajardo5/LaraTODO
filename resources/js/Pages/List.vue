@@ -18,14 +18,26 @@ const props = defineProps({
 
 const tasks = computed(() => props.tasks);
 
-const form = useForm({
+const taskForm = useForm({
     'task': ''
 });
 
-function submit() {
-    form.post(route('tasks.create', { 'list_id': props.list.id }), {
+const listForm = useForm({
+    'title': props.list.title
+});
+
+function updateList() {
+    listForm.patch(route('lists.update', { 'id': props.list.id }), {
         onFinish: () => {
-            form.task = '';
+            listForm.title = listForm.title;
+        },
+    });
+}
+
+function submitTask() {
+    taskForm.post(route('tasks.create', { 'list_id': props.list.id }), {
+        onFinish: () => {
+            taskForm.task = '';
         },
     });
 }
@@ -43,10 +55,11 @@ function updateTask(task: ListTask) {
     <AuthenticatedLayout>
         <template #header>
             <div class="inline-flex items-center">
-                <input type="text"
-                    class="dark:bg-gray-700 border-gray-900 rounded-l-lg font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
-                    :value="list.title">
-                <button class="px-4 py-2 bg-purple-800 rounded-r-lg">Update Name</button>
+                <form @submit.prevent="updateList">
+                    <input type="text" v-model="listForm.title"
+                        class="dark:bg-gray-700 border-gray-900 rounded-l-lg font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                    <button class="px-4 py-2 bg-purple-800 rounded-r-lg" type="submit">Update Name</button>
+                </form>
             </div>
         </template>
 
@@ -55,9 +68,9 @@ function updateTask(task: ListTask) {
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <div class="w-full inline-flex justify-center items-center p-6">
-                            <form @submit.prevent="submit">
+                            <form @submit.prevent="submitTask">
                                 <div class="inline-flex items-center">
-                                    <input v-model="form.task" class="border-gray-900 rounded-l-lg text-gray-800"
+                                    <input v-model="taskForm.task" class="border-gray-900 rounded-l-lg text-gray-800"
                                         type="text" name="task">
                                     <button class="px-4 py-2 bg-green-600 rounded-r-lg" type="submit">Add Task</button>
                                 </div>
