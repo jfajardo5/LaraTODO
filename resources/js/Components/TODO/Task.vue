@@ -1,7 +1,7 @@
 <template>
     <div class="inline-flex justify-between items-center">
-        <input type="checkbox" v-model="task.completed" @click="check">
-        <span class="px-2">{{ task.todo }}</span>
+        <input type="checkbox" v-model="task.completed" @change="updatedCheckbox">
+        <input class="dark:bg-gray-800 border-none" type="text" v-model="task.todo" @change="updatedTodo">
     </div>
 </template>
 
@@ -14,8 +14,10 @@ const props = defineProps({
 });
 
 const emit = defineEmits();
-
-const check = () => {
+const updatedTodo = () => {
+    emit('update:task', { ...props.task, todo: props.task.todo });
+}
+const updatedCheckbox = () => {
     emit('update:task', { ...props.task, completed: !props.task.completed });
 }
 </script>

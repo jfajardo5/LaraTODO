@@ -56,9 +56,11 @@ function updateTask(task: ListTask) {
         <template #header>
             <div class="inline-flex items-center">
                 <form @submit.prevent="updateList">
-                    <input type="text" v-model="listForm.title"
-                        class="dark:bg-gray-700 border-gray-900 rounded-l-lg font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    <button class="px-4 py-2 bg-purple-800 rounded-r-lg" type="submit">Update Name</button>
+                    <div class="inline-flex items-center">
+                        <input type="text" v-model="listForm.title"
+                            class="dark:bg-gray-700 border-gray-900 rounded-l-lg font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                        <button class="px-4 py-2 bg-purple-800 rounded-r-lg" type="submit">Update Name</button>
+                    </div>
                 </form>
             </div>
         </template>
@@ -71,7 +73,7 @@ function updateTask(task: ListTask) {
                             <form @submit.prevent="submitTask">
                                 <div class="inline-flex items-center">
                                     <input v-model="taskForm.task" class="border-gray-900 rounded-l-lg text-gray-800"
-                                        type="text" name="task">
+                                        type="text" name="task" placeholder="Enter a new task">
                                     <button class="px-4 py-2 bg-green-600 rounded-r-lg" type="submit">Add Task</button>
                                 </div>
                             </form>
