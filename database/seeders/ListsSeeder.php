@@ -12,6 +12,12 @@ class ListsSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        foreach (\App\Models\User::all() as $user) {
+            for ($i = 0; $i < 10; $i++) {
+                $list = new \App\Models\Lists;
+                $list->title = fake()->sentence();
+                $user->lists()->save($list);
+            }
+        }
     }
 }
