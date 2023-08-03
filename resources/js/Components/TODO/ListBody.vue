@@ -1,5 +1,5 @@
 <template>
-    <section class="w-1/2 border border-black rounded-lg p-4 m-4">
+    <section class="bg-gray-700 w-1/2 border border-black rounded-lg p-4 m-4">
         <h2>
             <h2 class="text-2xl font-bold underline">
                 {{ title }}

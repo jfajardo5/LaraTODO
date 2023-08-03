@@ -1,7 +1,7 @@
 <template>
     <div class="inline-flex justify-between items-center">
         <input type="checkbox" v-model="task.completed" @click="updatedCheckbox">
-        <input class="w-full dark:bg-gray-800 border-none" type="text" v-model="task.todo" @change="updatedTodo">
+        <input class="w-full dark:bg-gray-700 border-none" type="text" v-model="task.todo" @change="updatedTodo">
     </div>
 </template>
 

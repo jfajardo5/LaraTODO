@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 
+// TODO Write tests
 class ListsController extends Controller
 {
-    // TODO Build delete()
+
     public function all(Request $request): Response
     {
         $lists = $request->user()->lists()->get()->map(function ($list) {
@@ -60,5 +61,14 @@ class ListsController extends Controller
         $list->title = Str::limit($request->title, 255);
         $list->save();
         return to_route('lists.view', ['id' => $list_id]);
+    }
+
+    public function delete(Request $request, String $list_id): RedirectResponse
+    {
+        $request->validate([
+            $list_id => 'numeric|exists:lists,id'
+        ]);
+        $request->user()->lists()->findOrFail($list_id)->delete();
+        return to_route('dashboard');
     }
 }

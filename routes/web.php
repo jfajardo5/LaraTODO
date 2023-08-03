@@ -36,6 +36,8 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::post('/lists', [ListsController::class, 'create'])->name('lists.create');
     Route::get('/lists/{id}', [ListsController::class, 'view'])->name('lists.view');
     Route::patch('/lists/{id}', [ListsController::class, 'update'])->name('lists.update');
+    Route::delete('/lists/{id}', [ListsController::class, 'delete'])->name('lists.delete');
+
 
     /** Tasks Routes **/
     Route::post('/lists/{list_id}/tasks', [TasksController::class, 'create'])->name('tasks.create');
