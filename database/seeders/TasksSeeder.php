@@ -12,15 +12,17 @@ class TasksSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (\App\Models\User::all() as $user) {
+        $users = \App\Models\User::all();
+        foreach ($users as $user) {
             $this->createTasks($user);
         }
     }
 
     protected function createTasks(\App\Models\User $user): void
     {
-        foreach ($user->lists()->get() as $list) {
-            for ($i = 0; $i < 20; $i++) {
+        $lists = $user->lists()->get();
+        foreach ($lists as $list) {
+            for ($i = 0; $i < 5; $i++) {
                 $task = new \App\Models\Tasks;
                 $task->todo = fake()->sentence();
                 $task->lists_id = $list->id;
