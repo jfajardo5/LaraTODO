@@ -28,7 +28,7 @@ class TasksController extends Controller
         return to_route('lists.view', ['id' => $list->id]);
     }
 
-    public function update(Request $request, String $list_id, String $task_id)
+    public function update(Request $request, String $list_id, String $task_id): void
     {
         $request->validate([
             $list_id => 'numeric|exists:lists,id',
