@@ -10,7 +10,7 @@ class TasksControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_create_route_creates_a_new_task_successfully(): void
+    public function test_tasks_create_route_creates_a_new_task_successfully(): void
     {
         $user = \App\Models\User::get()->first();
         $list = $user->lists()->get()->first();
@@ -19,5 +19,31 @@ class TasksControllerTest extends TestCase
         $response->assertStatus(302);
         $task = $list->tasks()->where('todo', $todo)->get()->first();
         assertTrue($task->todo == $todo);
+    }
+
+    public function test_tasks_update_route_updates_a_task_successfully(): void
+    {
+        $user = \App\Models\User::get()->first();
+        $list = $user->lists()->get()->first();
+        $task = $list->tasks()->get()->first();
+        $todo = fake()->sentence();
+        $completed = true;
+        $response = $this->actingAs($user)->patch(
+            route(
+                'tasks.update',
+                [
+                    'list_id' => $list->id,
+                    'task_id' => $task->id
+                ]
+            ),
+            [
+                'todo' => $todo,
+                'completed' => $completed
+            ]
+        );
+        $response->assertOk();
+        $task->refresh();
+        assertTrue($task->todo == $todo);
+        assertTrue($task->completed == $completed);
     }
 }
