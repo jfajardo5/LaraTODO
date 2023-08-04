@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, router } from '@inertiajs/vue3';
 import { ListModel } from '@/types/todo';
 
 const props = defineProps({
@@ -13,9 +13,17 @@ const form = useForm({
     'title': ''
 });
 
-function submit() {
+function submit(): void {
     form.post(route('lists.create'), {
     });
+}
+function deleteList(element: Event): void {
+    if (confirm('Are you sure you want to delete this list?')) {
+        console.log(element.target.id);
+        router.delete(route('lists.delete', {
+            'id': element.target.id
+        }));
+    }
 }
 </script>
 
@@ -39,10 +47,12 @@ function submit() {
                         </form>
                         <h1 class="text-2xl mt-4 mb-2">Your lists</h1>
                         <div class="flex flex-row mt-5">
-                            <div v-for="list in  lists">
-                                <div class="flex flex-col bg-gray-700 p-4 m-2 rounded-lg">
+                            <div v-for="list in lists">
+                                <div class="flex flex-col bg-gray-700 p-4 m-2 rounded-lg text-center">
                                     <a :href="list.url" class="text-xl">{{ list.title }}</a>
                                     <span class="text-sm">({{ list.tasks_count }} tasks)</span>
+                                    <button :id="list.id" class="bg-red-600 px-2 py-1 m-2 rounded-lg"
+                                        @click="deleteList">Delete</button>
                                 </div>
                             </div>
                         </div>
