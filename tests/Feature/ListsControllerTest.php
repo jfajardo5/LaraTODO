@@ -29,6 +29,16 @@ class ListsControllerTest extends TestCase
         $response->assertSee($lists);
     }
 
+    public function test_lists_create_route_successfully_creates_a_list(): void
+    {
+        $user = \App\Models\User::get()->first();
+        $title = fake()->sentence();
+        $response = $this->actingAs($user)->post(route('lists.create'), ['title' => $title]);
+        $response->assertStatus(302);
+        $list = $user->lists()->where('title', $title)->get()->first();
+        assertTrue($list->title == $title);
+    }
+
     public function test_lists_view_route_receives_the_correct_json_response(): void
     {
         $user = \App\Models\User::get()->first();
@@ -40,13 +50,14 @@ class ListsControllerTest extends TestCase
         $response->assertSee($tasks);
     }
 
-    public function test_lists_create_route_successfully_creates_a_list(): void
+    public function test_lists_update_route_updates_a_list_successfully(): void
     {
         $user = \App\Models\User::get()->first();
+        $list = $user->lists()->get()->first();
         $title = fake()->sentence();
-        $response = $this->actingAs($user)->post(route('lists.create'), ['title' => $title]);
+        $response = $this->actingAs($user)->patch(route('lists.update', ['id' => $list->id]), ['title' => $title]);
         $response->assertStatus(302);
-        $list = $user->lists()->where('title', $title)->get()->first();
+        $list->refresh();
         assertTrue($list->title == $title);
     }
 
