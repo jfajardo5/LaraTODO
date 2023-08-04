@@ -51,24 +51,24 @@ class ListsController extends Controller
         return to_route('lists.view', ['id' => $list->id]);
     }
 
-    public function update(Request $request, String $list_id): RedirectResponse
+    public function update(Request $request, String $id): RedirectResponse
     {
         $request->validate([
-            $list_id => 'numeric|exists:lists,id',
+            $id => 'numeric|exists:lists,id',
             'title' => 'string'
         ]);
-        $list = $request->user()->lists()->findOrFail($list_id);
+        $list = $request->user()->lists()->findOrFail($id);
         $list->title = Str::limit($request->title, 255);
         $list->save();
-        return to_route('lists.view', ['id' => $list_id]);
+        return to_route('lists.view', ['id' => $id]);
     }
 
-    public function delete(Request $request, String $list_id): RedirectResponse
+    public function delete(Request $request, String $id): RedirectResponse
     {
         $request->validate([
-            $list_id => 'numeric|exists:lists,id'
+            $id => 'numeric|exists:lists,id'
         ]);
-        $request->user()->lists()->findOrFail($list_id)->delete();
+        $request->user()->lists()->findOrFail($id)->delete();
         return to_route('dashboard');
     }
 }
