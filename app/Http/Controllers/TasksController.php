@@ -14,13 +14,13 @@ class TasksController extends Controller
     {
         $request->validate([
             $list_id => 'numeric|exists:lists,id',
-            'task' => 'string|required'
+            'todo' => 'string|required'
         ]);
 
         $list = $request->user()->lists()->findOrFail($list_id);
 
         $task = new Tasks;
-        $task->todo = Str::limit($request->task, 255);
+        $task->todo = Str::limit($request->todo, 255);
         $task->user_id = $request->user()->id;
         $task->lists_id = $list->id;
         $task->save();
