@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 use function PHPUnit\Framework\assertEmpty;
+use function PHPUnit\Framework\assertTrue;
 
 class ListsControllerTest extends TestCase
 {
@@ -37,6 +38,16 @@ class ListsControllerTest extends TestCase
         $response->assertOk();
         $response->assertSee($list);
         $response->assertSee($tasks);
+    }
+
+    public function test_lists_create_route_successfully_creates_a_list(): void
+    {
+        $user = \App\Models\User::get()->first();
+        $title = fake()->sentence();
+        $response = $this->actingAs($user)->post(route('lists.create'), ['title' => $title]);
+        $response->assertStatus(302);
+        $list = $user->lists()->where('title', $title)->get()->first();
+        assertTrue($list->title == $title);
     }
 
     public function test_lists_delete_route_deletes_a_list_successfully(): void
