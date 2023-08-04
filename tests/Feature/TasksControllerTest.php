@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use function PHPUnit\Framework\assertTrue;
+use function PHPUnit\Framework\assertEmpty;
 
 class TasksControllerTest extends TestCase
 {
@@ -45,5 +46,21 @@ class TasksControllerTest extends TestCase
         $task->refresh();
         assertTrue($task->todo == $todo);
         assertTrue($task->completed == $completed);
+    }
+
+    public function test_tasks_delete_route_deletes_a_task_successfully(): void
+    {
+        $user = \App\Models\User::get()->first();
+        $list = $user->lists()->get()->first();
+        $task = $list->tasks()->get()->first();
+        $response = $this->actingAs($user)->delete(route(
+            'tasks.delete',
+            [
+                'list_id' => $list->id,
+                'task_id' => $task->id
+            ]
+        ));
+        $response->assertStatus(302);
+        assertEmpty(\App\Models\Tasks::where('id', $task->id)->get());
     }
 }
