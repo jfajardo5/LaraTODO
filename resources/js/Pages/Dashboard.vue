@@ -46,7 +46,7 @@ function deleteList(element: Event): void {
                         </form>
                         <h1 class="text-2xl mt-4 mb-2">{{ lists.length ? "Your Lists" : "You haven't created any lists yet"
                         }}</h1>
-                        <div class="flex flex-row mt-5">
+                        <div class="flex flex-row flex-wrap mt-5">
                             <div v-for="list in props.lists">
                                 <div class="flex flex-col bg-gray-700 p-4 m-2 rounded-lg text-center">
                                     <a :href="list.url" class="text-xl">{{ list.title }}</a>
