@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 
-// TODO Write tests
 class ListsController extends Controller
 {
 

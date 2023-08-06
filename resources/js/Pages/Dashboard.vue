@@ -19,7 +19,6 @@ function submit(): void {
 }
 function deleteList(element: Event): void {
     if (confirm('Are you sure you want to delete this list?')) {
-        console.log(element.target.id);
         router.delete(route('lists.delete', {
             'id': element.target.id
         }));
@@ -45,9 +44,10 @@ function deleteList(element: Event): void {
                                 <button class="rounded-r-lg px-4 py-2 bg-purple-800" type="submit">Create List</button>
                             </div>
                         </form>
-                        <h1 class="text-2xl mt-4 mb-2">Your lists</h1>
+                        <h1 class="text-2xl mt-4 mb-2">{{ lists.length ? "Your Lists" : "You haven't created any lists yet"
+                        }}</h1>
                         <div class="flex flex-row mt-5">
-                            <div v-for="list in lists">
+                            <div v-for="list in props.lists">
                                 <div class="flex flex-col bg-gray-700 p-4 m-2 rounded-lg text-center">
                                     <a :href="list.url" class="text-xl">{{ list.title }}</a>
                                     <span class="text-sm">({{ list.tasks_count }} tasks)</span>

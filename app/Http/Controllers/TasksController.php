@@ -7,7 +7,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-// TODO Write tests
 class TasksController extends Controller
 {
     public function create(Request $request, String $list_id): RedirectResponse
