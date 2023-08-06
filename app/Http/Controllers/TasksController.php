@@ -24,10 +24,10 @@ class TasksController extends Controller
         $task->lists_id = $list->id;
         $task->save();
 
-        return to_route('lists.view', ['id' => $list->id]);
+        return to_route('lists.view', ['id' => $list_id]);
     }
 
-    public function update(Request $request, String $list_id, String $task_id): void
+    public function update(Request $request, String $list_id, String $task_id): RedirectResponse
     {
         $request->validate([
             $list_id => 'numeric|exists:lists,id',
@@ -44,6 +44,8 @@ class TasksController extends Controller
         $task->todo = Str::limit($request->todo, 255);
         $task->completed = $request->completed;
         $task->save();
+
+        return to_route('lists.view', ['id' => $list_id]);
     }
 
     public function delete(Request $request, String $list_id, String $task_id): RedirectResponse

@@ -42,7 +42,7 @@ class TasksControllerTest extends TestCase
                 'completed' => $completed
             ]
         );
-        $response->assertOk();
+        $response->assertStatus(302);
         $task->refresh();
         assertTrue($task->todo == $todo);
         assertTrue($task->completed == $completed);
